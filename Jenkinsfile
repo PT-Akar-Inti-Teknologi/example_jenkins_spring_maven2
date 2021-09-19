@@ -8,11 +8,14 @@ pipeline {
 
   stages {
     stage('Build & Test') {
+      agent {
+        docker {
+          image 'openjdk:8-jdk-alpine'
+          reuseNode true
+        }
+      }
       steps {
-        sh 'mvn -Dmaven.test.failure.ignore=true install'
-        // sh 'mvn test'
-        jacoco()
-        sh 'ls -al'
+        sh './mvnw clean test'
       }
     }
 
