@@ -10,12 +10,13 @@ pipeline {
     stage('Build & Test') {
       agent {
         docker {
-          image 'openjdk:8-jdk-alpine'
+          image 'openjdk:14-jdk-alpine'
           reuseNode true
         }
       }
       steps {
-        sh './mvnw clean test'
+        sh './mvnw clean install -DskipTests'
+        sh './mvnw test'
       }
     }
 
