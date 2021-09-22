@@ -1,32 +1,32 @@
-# Spring Boot Testing Strategies
+# Spring Boot Jenkins Example
 
-## Introduction
+Sample project to demonstrate how to use Jenkins & SonarQube in Spring Boot with Maven.
 
-This sample application made with Spring Boot is intended to show the different approach for testing, from Unit Tests with MockMVC in Standalone mode to full `@SpringBootTest` as Integration tests between the modules.
+## Table of Contents
 
-The complete guide is available on [The Practical Developer Blog](https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/).
+- [General Information](#general-information)
+- [Technologies Used](#technologies-used)
+- [Setup](#setup)
 
-## The application
+## General Information
 
-The logic behind the application is simple: it's a repository of superheroes that you can access through a REST API. It allows to read the available ones (which are hardcoded when the application starts up) and also add new members to the crew.
+- This sample project uses Docker for Jenkins pipeline to build and test a typical Spring Boot project
+- Please see `Jenkinsfile` and `sonar-project.properties` as a reference
+- This is a preferred way to run Jenkins pipeline
 
-The architecture is simple: just the Controller layer (REST) and a `SuperHeroRepository`. To illustrate the differences when creating tests, there are two extra classes that work at a web layer level:
+## Technologies Used
 
-* `SuperHeroExceptionHandler`. It's a `ControllerAdvice` that will transform a `NonExistingHeroException` into a `404 NOT_FOUND` HTTP error code.
-* `SuperHeroFilter`. This web filter adds a new header to the HTTP response. 
+- Spring Boot 2.3
+- JDK 14
+- Spring Boot Test with Junit 5
 
-## Testing strategies
+## Setup
 
-In the test sources you can find four different approaches to test the Controller. `SuperHeroControllerMockMvcStandaloneTest`. Uses a `MockitoJUnitRunner` and it's the most lightweight approach.
+### Development
 
-![MockMVC in Standalone mode](images/tests_mockmvc_wm.png)
+- `./mvnw clean verify`
+- `./mvnw spring-boot:run`
 
-Then you can find two approaches using a Spring context, both use `MockMVC` and one of them already introduces the `@SpringBootTest` annotation.
+### Test
 
-![MockMVC using the context](images/tests_mockmvc_with_context_wm.png)
-
-Finally, `SuperHeroControllerSpringBootTest` shows how to write a `@SpringBootTest` based test mocking other layers but utilizing the web server with a `RestTemplate`. 
-
-![@SpringBootTest using context and web server](images/tests_springboot_wm.png)
-
-To check conclusion and more information please visit [the blog](https://thepracticaldeveloper.com/2017/07/31/guide-spring-boot-controller-tests/).
+- `./mvnw test`
